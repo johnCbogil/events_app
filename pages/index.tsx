@@ -44,7 +44,6 @@ export default function Home({data}:{data:any}) {
 
 export async function getServerSideProps() {
   const {events_categories} = await require('/data/data.json');
-  console.log(events_categories);
 
   return {
     props: {
