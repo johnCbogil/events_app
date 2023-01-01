@@ -1,17 +1,29 @@
-export default function EventsPage() {
+import Image from 'next/image'
+
+export default function EventsPage({data}) {
     return(
         <div>
         <h1>Events</h1>
-        <a href=''>
-          <img></img>
-          <h2>Events in London</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-          <h2>Events in San Francisco</h2>
-          <p>quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>
-          <h2>Events in Barcelona</h2>
-          <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
-        </a>
+        {
+          data.map((event) => (
+            <>
+            <a key={event.id} href={`/events/${event.id}`}>
+            <Image width={200} height={200} alt={event.title} src={event.image} />
+            <h2>{event.title}</h2>
+            <p>{event.description}</p>
+            </a>
+            </>
+          ))
+          }
         </div>
-    
     )
+}
+
+export async function getServerSideProps() {
+  const { events_categories } = await import ('/data/data.json')
+  return {
+    props: {
+      data: events_categories
+    }
+  }
 }

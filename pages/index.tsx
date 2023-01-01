@@ -5,7 +5,7 @@ import styles from '../styles/Home.module.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home({title}:{title:String}) {
+export default function Home({data}:{data:any}) {
   return (
     <div className={styles.container}>
       <Head>
@@ -23,15 +23,17 @@ export default function Home({title}:{title:String}) {
         </nav>
       </header>
       <main className={styles.main}>
-        <a href=''>
-          <img></img>
-          <h2>Events in {title}</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-          <h2>Events in San Francisco</h2>
-          <p>quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>
-          <h2>Events in Barcelona</h2>
-          <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
-        </a>
+        {
+          data.map((event:any) => (
+            <>
+            <a key={event.id} href={`/events/${event.id}`}>
+            <Image width={200} height={200} alt={event.title} src={event.image} />
+            <h2>{event.title}</h2>
+            <p>{event.description}</p>
+            </a>
+            </>
+          ))
+          }
       </main>
       <footer className={styles.footer}>
         <p>CopyLeft 3022</p>
@@ -46,7 +48,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      title: "~Busssss~",
+      data: events_categories
     },
   };
 }
